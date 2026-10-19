@@ -6,6 +6,7 @@ import {
   CircuitBoard, 
   Cpu, 
   ExternalLink, 
+  Globe,
   ImageIcon, 
   Info, 
   Maximize2,
@@ -20,6 +21,10 @@ import {
 export default function ProjectModal({ project, onClose }) {
   const [activeTab, setActiveTab] = useState('overview');
   const [enlargedImage, setEnlargedImage] = useState(null);
+
+  const hasHardwareMedia = !!(project?.wiringDiagram || project?.wiringDiagramPlaceholder || project?.demoVideoPlaceholder);
+  const hasLiveApp = !!project?.liveUrl;
+  const hasMediaTab = hasHardwareMedia || hasLiveApp;
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -111,20 +116,31 @@ export default function ProjectModal({ project, onClose }) {
               }`}
             >
               <CircuitBoard className="w-3.5 h-3.5" />
-              <span>Hardware Specs & Pinouts</span>
+              <span>{project.pinoutTitle ? "Specs & Mathematical Model" : "Hardware Specs & Pinouts"}</span>
             </button>
 
-            <button
-              onClick={() => setActiveTab('media')}
-              className={`py-3 px-2 border-b-2 transition-colors whitespace-nowrap flex items-center gap-1.5 ${
-                activeTab === 'media'
-                  ? 'border-[#00ff88] text-[#00ff88] font-bold shadow-[0_2px_10px_rgba(0,255,136,0.5)]'
-                  : 'border-transparent text-slate-400 hover:text-slate-200'
-              }`}
-            >
-              <ImageIcon className="w-3.5 h-3.5" />
-              <span>Wiring Diagram & Demo Media</span>
-            </button>
+            {hasMediaTab && (
+              <button
+                onClick={() => setActiveTab('media')}
+                className={`py-3 px-2 border-b-2 transition-colors whitespace-nowrap flex items-center gap-1.5 ${
+                  activeTab === 'media'
+                    ? 'border-[#00ff88] text-[#00ff88] font-bold shadow-[0_2px_10px_rgba(0,255,136,0.5)]'
+                    : 'border-transparent text-slate-400 hover:text-slate-200'
+                }`}
+              >
+                {hasHardwareMedia ? (
+                  <>
+                    <ImageIcon className="w-3.5 h-3.5" />
+                    <span>Wiring Diagram & Demo Media</span>
+                  </>
+                ) : (
+                  <>
+                    <Globe className="w-3.5 h-3.5" />
+                    <span>Live App & Deployment</span>
+                  </>
+                )}
+              </button>
+            )}
           </div>
 
           {/* Modal Body Content (Scrollable) */}
@@ -145,6 +161,35 @@ export default function ProjectModal({ project, onClose }) {
                     </p>
                   </div>
                 </div>
+
+                {/* Live Deployment Banner */}
+                {project.liveUrl && (
+                  <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-[#00ff88]/15 via-emerald-950/30 to-black/60 border border-[#00ff88]/30 shadow-[0_0_25px_rgba(0,255,136,0.12)] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-2">
+                        <span className="flex h-2 w-2 rounded-full bg-[#00ff88] animate-ping" />
+                        <span className="text-[11px] font-mono text-[#00ff88] uppercase tracking-wider font-semibold">
+                          Active Live Deployment
+                        </span>
+                      </div>
+                      <h4 className="text-base font-bold text-white">
+                        {project.liveLabel || "Interactive Live Application"}
+                      </h4>
+                      <p className="text-xs text-slate-300 font-mono break-all">
+                        {project.liveUrl}
+                      </p>
+                    </div>
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-5 py-2.5 rounded-xl text-xs font-bold bg-[#00ff88] text-black hover:bg-[#4ade80] transition-all shadow-[0_0_15px_rgba(0,255,136,0.35)] flex items-center gap-2 shrink-0 active:scale-95"
+                    >
+                      <span>Launch Live App</span>
+                      <ArrowUpRight className="w-4 h-4" />
+                    </a>
+                  </div>
+                )}
 
                 <div>
                   <h4 className="text-sm font-semibold text-white mb-2 font-mono uppercase tracking-wider text-slate-400">
@@ -194,14 +239,14 @@ export default function ProjectModal({ project, onClose }) {
                 <div>
                   <h4 className="text-xs font-mono uppercase tracking-wider text-[#00ff88] mb-3 flex items-center gap-2">
                     <CircuitBoard className="w-4 h-4" />
-                    <span>Microcontroller Pinout & Signal Mapping</span>
+                    <span>{project.pinoutTitle || "Microcontroller Pinout & Signal Mapping"}</span>
                   </h4>
                   <div className="overflow-x-auto rounded-xl border border-[#00ff88]/20 bg-white/[0.01]">
                     <table className="w-full text-left text-xs">
                       <thead className="bg-[#00ff88]/10 text-[#00ff88] font-mono uppercase border-b border-[#00ff88]/20">
                         <tr>
-                          <th className="py-2.5 px-4 font-semibold">Header / Pin</th>
-                          <th className="py-2.5 px-4 font-semibold">Signal / Connected Peripheral</th>
+                          <th className="py-2.5 px-4 font-semibold">{project.pinoutHeader1 || "Header / Pin"}</th>
+                          <th className="py-2.5 px-4 font-semibold">{project.pinoutHeader2 || "Signal / Connected Peripheral"}</th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-[#00ff88]/10 font-mono">
@@ -222,7 +267,7 @@ export default function ProjectModal({ project, onClose }) {
                     <div className="flex items-center justify-between mb-3">
                       <h4 className="text-xs font-mono uppercase tracking-wider text-[#00ff88] flex items-center gap-2">
                         <ImageIcon className="w-4 h-4" />
-                        <span>Verified Circuit Pin Diagram</span>
+                        <span>{project.diagramTitle || "Verified Circuit Pin Diagram"}</span>
                       </h4>
                       <button
                         onClick={() => setActiveTab('media')}
@@ -257,108 +302,185 @@ export default function ProjectModal({ project, onClose }) {
               </div>
             )}
 
-            {/* TAB 3: MEDIA & WIRING PLACEHOLDERS */}
+            {/* TAB 3: MEDIA & LIVE APP SHOWCASE */}
             {activeTab === 'media' && (
               <div className="space-y-6">
-                {/* Wiring Diagram Frame */}
-                <div>
-                  <div className="flex items-center justify-between mb-3">
-                    <h4 className="text-xs font-mono uppercase tracking-wider text-slate-200 flex items-center gap-2">
-                      <CircuitBoard className="w-4 h-4 text-[#00ff88]" />
-                      <span>Wiring & Circuit Schematic Diagram</span>
-                    </h4>
-                    {project.wiringDiagram ? (
-                      <div className="flex items-center gap-2">
-                        <a
-                          href={project.wiringDiagram}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-[11px] text-[#00ff88] hover:text-[#4ade80] font-mono flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#00ff88]/10 border border-[#00ff88]/25 hover:border-[#00ff88]/40 transition-colors"
-                        >
-                          <span>Open Full Image</span>
-                          <ExternalLink className="w-3 h-3" />
-                        </a>
-                      </div>
-                    ) : (
-                      <span className="text-[11px] text-emerald-400/70 font-mono">Editable Placeholder</span>
-                    )}
-                  </div>
-                  
-                  {project.wiringDiagram ? (
-                    <div className="space-y-3">
-                      <div 
-                        onClick={() => setEnlargedImage(project.wiringDiagram)}
-                        className="relative rounded-2xl overflow-hidden border border-[#00ff88]/30 bg-black/70 group cursor-pointer shadow-[0_0_30px_rgba(0,255,136,0.1)] hover:border-[#00ff88] transition-all p-2 sm:p-4"
-                      >
-                        <img 
-                          src={project.wiringDiagram} 
-                          alt={`${project.title} circuit wiring diagram`}
-                          className="w-full max-h-[460px] object-contain mx-auto group-hover:scale-[1.01] transition-transform duration-300 rounded-lg"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-between p-4 pointer-events-none">
-                          <span className="text-xs font-mono text-[#00ff88] flex items-center gap-1.5">
-                            <Maximize2 className="w-4 h-4" /> Click to open full-screen lightbox
-                          </span>
-                          <span className="text-xs bg-[#00ff88] text-black font-bold px-3 py-1 rounded-full shadow-[0_0_10px_#00ff88]">
-                            Zoom View
-                          </span>
-                        </div>
+                {hasHardwareMedia ? (
+                  <>
+                    {/* Wiring Diagram Frame */}
+                    <div>
+                      <div className="flex items-center justify-between mb-3">
+                        <h4 className="text-xs font-mono uppercase tracking-wider text-slate-200 flex items-center gap-2">
+                          <CircuitBoard className="w-4 h-4 text-[#00ff88]" />
+                          <span>{project.diagramTitle || "Wiring & Circuit Schematic Diagram"}</span>
+                        </h4>
+                        {project.wiringDiagram ? (
+                          <div className="flex items-center gap-2">
+                            <a
+                              href={project.wiringDiagram}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-[11px] text-[#00ff88] hover:text-[#4ade80] font-mono flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#00ff88]/10 border border-[#00ff88]/25 hover:border-[#00ff88]/40 transition-colors"
+                            >
+                              <span>Open Full Image</span>
+                              <ExternalLink className="w-3 h-3" />
+                            </a>
+                          </div>
+                        ) : (
+                          <span className="text-[11px] text-emerald-400/70 font-mono">Editable Placeholder</span>
+                        )}
                       </div>
                       
-                      <div className="p-3.5 rounded-xl bg-white/[0.02] border border-[#00ff88]/15 flex items-start gap-2.5 text-xs text-slate-300">
-                        <Sparkles className="w-4 h-4 text-[#00ff88] shrink-0 mt-0.5" />
-                        <div>
-                          <p className="font-semibold text-white">Hardware Implementation Accuracy</p>
-                          <p className="text-slate-400 text-[11px] mt-0.5">
-                            This schematic reflects the real physical pin layout, microcontroller header connections, and circuit protections verified on bench.
+                      {project.wiringDiagram ? (
+                        <div className="space-y-3">
+                          <div 
+                            onClick={() => setEnlargedImage(project.wiringDiagram)}
+                            className="relative rounded-2xl overflow-hidden border border-[#00ff88]/30 bg-black/70 group cursor-pointer shadow-[0_0_30px_rgba(0,255,136,0.1)] hover:border-[#00ff88] transition-all p-2 sm:p-4"
+                          >
+                            <img 
+                              src={project.wiringDiagram} 
+                              alt={`${project.title} circuit wiring diagram`}
+                              className="w-full max-h-[460px] object-contain mx-auto group-hover:scale-[1.01] transition-transform duration-300 rounded-lg"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-between p-4 pointer-events-none">
+                              <span className="text-xs font-mono text-[#00ff88] flex items-center gap-1.5">
+                                <Maximize2 className="w-4 h-4" /> Click to open full-screen lightbox
+                              </span>
+                              <span className="text-xs bg-[#00ff88] text-black font-bold px-3 py-1 rounded-full shadow-[0_0_10px_#00ff88]">
+                                Zoom View
+                              </span>
+                            </div>
+                          </div>
+                          
+                          <div className="p-3.5 rounded-xl bg-white/[0.02] border border-[#00ff88]/15 flex items-start gap-2.5 text-xs text-slate-300">
+                            <Sparkles className="w-4 h-4 text-[#00ff88] shrink-0 mt-0.5" />
+                            <div>
+                              <p className="font-semibold text-white">Hardware Implementation Accuracy</p>
+                              <p className="text-slate-400 text-[11px] mt-0.5">
+                                This schematic reflects the real physical pin layout, microcontroller header connections, and circuit protections verified on bench.
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="p-8 rounded-2xl border-2 border-dashed border-[#00ff88]/30 bg-white/[0.02] flex flex-col items-center justify-center text-center group hover:border-[#00ff88]/60 transition-colors">
+                          <div className="w-14 h-14 rounded-2xl bg-[#00ff88]/15 text-[#00ff88] flex items-center justify-center mb-3 group-hover:scale-110 transition-transform shadow-[0_0_20px_rgba(0,255,136,0.2)]">
+                            <CircuitBoard className="w-7 h-7" />
+                          </div>
+                          <p className="text-sm font-semibold text-white">Wiring Diagram Slot</p>
+                          <p className="text-xs text-slate-400 max-w-md mt-1">
+                            Save your KiCad or Fritzing schematic as <code className="text-[#00ff88] bg-white/5 px-1 py-0.5 rounded">{project.wiringDiagramPlaceholder}</code> in the <code className="text-slate-300">public/projects/</code> directory.
                           </p>
                         </div>
-                      </div>
+                      )}
                     </div>
-                  ) : (
-                    <div className="p-8 rounded-2xl border-2 border-dashed border-[#00ff88]/30 bg-white/[0.02] flex flex-col items-center justify-center text-center group hover:border-[#00ff88]/60 transition-colors">
-                      <div className="w-14 h-14 rounded-2xl bg-[#00ff88]/15 text-[#00ff88] flex items-center justify-center mb-3 group-hover:scale-110 transition-transform shadow-[0_0_20px_rgba(0,255,136,0.2)]">
-                        <CircuitBoard className="w-7 h-7" />
-                      </div>
-                      <p className="text-sm font-semibold text-white">Wiring Diagram Slot</p>
-                      <p className="text-xs text-slate-400 max-w-md mt-1">
-                        Save your KiCad or Fritzing schematic as <code className="text-[#00ff88] bg-white/5 px-1 py-0.5 rounded">{project.wiringDiagramPlaceholder}</code> in the <code className="text-slate-300">public/projects/</code> directory.
-                      </p>
-                    </div>
-                  )}
-                </div>
 
-                {/* Demo Video / Bench Test Media Placeholder */}
-                <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <h4 className="text-xs font-mono uppercase tracking-wider text-slate-300 flex items-center gap-2">
-                      <Video className="w-4 h-4 text-[#00ff88]" />
-                      <span>Bench Test / Hardware Demonstration Video</span>
-                    </h4>
-                    <span className="text-[11px] text-emerald-400/70 font-mono">Hardware Link</span>
-                  </div>
-
-                  <div className="p-6 rounded-2xl border border-[#00ff88]/20 bg-white/[0.02] flex flex-col sm:flex-row items-center justify-between gap-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-[#00ff88]/15 text-[#00ff88] flex items-center justify-center shrink-0">
-                        <Play className="w-5 h-5 ml-0.5" />
+                    {/* Demo Video / Bench Test Media Placeholder */}
+                    <div>
+                      <div className="flex items-center justify-between mb-2">
+                        <h4 className="text-xs font-mono uppercase tracking-wider text-slate-300 flex items-center gap-2">
+                          <Video className="w-4 h-4 text-[#00ff88]" />
+                          <span>Bench Test / Hardware Demonstration Video</span>
+                        </h4>
+                        <span className="text-[11px] text-emerald-400/70 font-mono">Hardware Link</span>
                       </div>
-                      <div className="text-left">
-                        <p className="text-xs font-semibold text-white">YouTube / Drive Demo Video Link</p>
-                        <p className="text-[11px] text-slate-400">Configure your video URL in <span className="font-mono text-[#00ff88]">src/data/portfolioData.js</span></p>
+
+                      <div className="p-6 rounded-2xl border border-[#00ff88]/20 bg-white/[0.02] flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-xl bg-[#00ff88]/15 text-[#00ff88] flex items-center justify-center shrink-0">
+                            <Play className="w-5 h-5 ml-0.5" />
+                          </div>
+                          <div className="text-left">
+                            <p className="text-xs font-semibold text-white">YouTube / Drive Demo Video Link</p>
+                            <p className="text-[11px] text-slate-400">Configure your video URL in <span className="font-mono text-[#00ff88]">src/data/portfolioData.js</span></p>
+                          </div>
+                        </div>
+                        <a
+                          href={project.demoVideoPlaceholder}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-4 py-2 rounded-xl text-xs font-medium bg-[#00ff88]/10 hover:bg-[#00ff88]/20 text-[#00ff88] border border-[#00ff88]/30 transition-all flex items-center gap-1.5 shrink-0"
+                        >
+                          <span>Open Link</span>
+                          <ExternalLink className="w-3.5 h-3.5" />
+                        </a>
                       </div>
                     </div>
-                    <a
-                      href={project.demoVideoPlaceholder}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-4 py-2 rounded-xl text-xs font-medium bg-[#00ff88]/10 hover:bg-[#00ff88]/20 text-[#00ff88] border border-[#00ff88]/30 transition-all flex items-center gap-1.5 shrink-0"
-                    >
-                      <span>Open Link</span>
-                      <ExternalLink className="w-3.5 h-3.5" />
-                    </a>
+                  </>
+                ) : hasLiveApp ? (
+                  /* Dedicated Live Deployment Showcase */
+                  <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-b from-[#00ff88]/10 via-black/40 to-black/80 border border-[#00ff88]/30 shadow-[0_0_40px_rgba(0,255,136,0.12)]">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                      <div>
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="flex h-2.5 w-2.5 rounded-full bg-[#00ff88] animate-ping" />
+                          <span className="text-xs font-mono text-[#00ff88] font-bold uppercase tracking-wider">
+                            Active Live Deployment
+                          </span>
+                        </div>
+                        <h4 className="text-xl sm:text-2xl font-bold text-white">
+                          {project.liveLabel || "Interactive Live Application"}
+                        </h4>
+                      </div>
+                      <a
+                        href={project.liveUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-6 py-3 rounded-2xl text-xs sm:text-sm font-bold bg-[#00ff88] text-black hover:bg-[#4ade80] transition-all shadow-[0_0_20px_rgba(0,255,136,0.35)] flex items-center justify-center gap-2 shrink-0 active:scale-95"
+                      >
+                        <span>Launch Fullscreen App</span>
+                        <ArrowUpRight className="w-4 h-4" />
+                      </a>
+                    </div>
+
+                    {/* Browser Mock Frame */}
+                    <div className="rounded-2xl border border-[#00ff88]/20 bg-[#020502] overflow-hidden shadow-2xl">
+                      <div className="p-3 bg-black/60 border-b border-[#00ff88]/15 flex items-center gap-2">
+                        <div className="flex items-center gap-1.5">
+                          <span className="w-2.5 h-2.5 rounded-full bg-red-500/70" />
+                          <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/70" />
+                          <span className="w-2.5 h-2.5 rounded-full bg-green-500/70" />
+                        </div>
+                        <div className="flex-1 mx-3 px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-slate-300 font-mono text-xs truncate flex items-center gap-1.5">
+                          <Globe className="w-3.5 h-3.5 text-[#00ff88] shrink-0" />
+                          <span className="truncate">{project.liveUrl}</span>
+                        </div>
+                        <a
+                          href={project.liveUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="p-1 rounded-md text-slate-400 hover:text-[#00ff88] transition-colors"
+                          title="Open in new tab"
+                        >
+                          <ExternalLink className="w-3.5 h-3.5" />
+                        </a>
+                      </div>
+                      
+                      <div className="p-6 sm:p-10 flex flex-col items-center justify-center text-center space-y-4 bg-gradient-to-b from-transparent to-[#00ff88]/[0.02]">
+                        <div className="w-16 h-16 rounded-3xl bg-[#00ff88]/15 text-[#00ff88] flex items-center justify-center shadow-[0_0_25px_rgba(0,255,136,0.25)] border border-[#00ff88]/30">
+                          <Globe className="w-8 h-8" />
+                        </div>
+                        <div className="max-w-md">
+                          <h5 className="text-base font-bold text-white mb-1">
+                            Interactive Cloud Platform Available
+                          </h5>
+                          <p className="text-xs text-slate-400 leading-relaxed">
+                            This software engineering application is hosted and running in production. Click below to explore live simulations, interactive controls, and visual telemetry in real time.
+                          </p>
+                        </div>
+                        <a
+                          href={project.liveUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white/10 hover:bg-[#00ff88]/20 text-[#00ff88] border border-[#00ff88]/30 hover:border-[#00ff88]/60 text-xs font-mono font-medium transition-all"
+                        >
+                          <span>Open {project.liveUrl}</span>
+                          <ExternalLink className="w-3.5 h-3.5" />
+                        </a>
+                      </div>
+                    </div>
                   </div>
-                </div>
+                ) : null}
               </div>
             )}
 
@@ -371,6 +493,19 @@ export default function ProjectModal({ project, onClose }) {
             </span>
 
             <div className="flex items-center gap-2.5">
+              {project.liveUrl && (
+                <a
+                  href={project.liveUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-4 py-2 rounded-full text-xs font-bold bg-[#00ff88] text-black hover:bg-[#4ade80] transition-all shadow-[0_0_15px_rgba(0,255,136,0.35)] flex items-center gap-1.5 active:scale-95"
+                >
+                  <Globe className="w-3.5 h-3.5" />
+                  <span>{project.liveLabel || "Launch Live App"}</span>
+                  <ExternalLink className="w-3 h-3 text-black" />
+                </a>
+              )}
+
               <a
                 href={project.githubRepo}
                 target="_blank"
@@ -384,7 +519,7 @@ export default function ProjectModal({ project, onClose }) {
 
               <button
                 onClick={onClose}
-                className="px-4 py-2 rounded-full text-xs font-bold bg-[#00ff88] text-black hover:bg-[#4ade80] transition-colors shadow-[0_0_15px_rgba(0,255,136,0.3)]"
+                className="px-4 py-2 rounded-full text-xs font-semibold bg-white/10 hover:bg-white/20 text-white transition-colors border border-white/10"
               >
                 Close View
               </button>

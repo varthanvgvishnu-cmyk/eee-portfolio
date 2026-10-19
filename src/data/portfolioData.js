@@ -16,7 +16,7 @@ export const personalInfo = {
   email: "varthanvgvishnu@gmail.com",
   socials: {
     github: "https://github.com/varthanvgvishnu-cmyk",
-    linkedin: "https://www.linkedin.com/in/vishnuvarthan",
+    linkedin: "https://www.linkedin.com/in/vishnu-varthan-vg",
     resume: "/resume.pdf",
   },
   stats: [
@@ -53,6 +53,43 @@ export const education = {
 };
 
 export const projects = [
+  {
+    id: "mosfet-thermal-analyzer",
+    title: "Power Semiconductor Loss & Thermal Reliability Analyzer",
+    category: "Power Electronics & Simulation",
+    statusBadge: "Python & Streamlit Simulation Engine (Verified)",
+    statusType: "completed",
+    featured: true,
+    shortDescription: "Interactive Python & Streamlit engineering simulation platform calculating conduction losses, switching dissipation, steady-state junction temperatures (Tj), and safe operating margins for power MOSFETs with Plotly parametric sweeps.",
+    fullDescription: "Engineered a modular Python simulation framework to evaluate semiconductor power dissipation and steady-state thermal behavior in power electronics switches. Calculates channel conduction loss via Joule heating (P_cond = I_RMS² · R_DS(on)) and dynamic switching dissipation (P_sw ≈ (E_on + E_off) · f_s). Integrates a 1D thermal resistance network to estimate junction temperatures (T_j = T_a + P_total · R_θ) and thermal safety margins against maximum silicon ratings (T_j(max)). Includes an interactive Streamlit dashboard with Plotly parametric sensitivity sweeps (frequency scaling 5–100 kHz, heatsink comparisons across 4, 8, 12 °C/W), CSV dataset export, and a 5-point automated Pytest verification suite.",
+    hardwareSpecs: [
+      { item: "Simulation Stack", detail: "Python 3.11, Streamlit, NumPy, Pandas" },
+      { item: "Visualization Engine", detail: "Plotly Interactive Charts (Loss Breakdown & Parametric Sweeps)" },
+      { item: "Verification Suite", detail: "Pytest (5 automated unit tests with edge-case validation)" },
+      { item: "Thermal Model Topology", detail: "Steady-state 1D thermal network (T_j = T_a + P_total × R_θ)" },
+      { item: "Baseline Operating Point", detail: "10A RMS, 20mΩ RDS(on), 200µJ (Eon+Eoff), 20kHz fs, 8°C/W R_θ" },
+      { item: "Simulated Performance", detail: "P_cond: 2.0W | P_sw: 4.0W | P_total: 6.0W | Tj: 78°C (Margin: +72°C) | η: 94.34%" }
+    ],
+    pinoutTitle: "Governing Equations & Mathematical Model",
+    pinoutHeader1: "Parameter / Metric",
+    pinoutHeader2: "Mathematical Formulation & Sample Evaluation",
+    pinoutTable: [
+      { pin: "Conduction Loss (P_cond)", function: "P_cond = I_RMS² × R_DS(on) = (10 A)² × 0.020 Ω = 2.00 W" },
+      { pin: "Switching Loss (P_sw)", function: "P_sw ≈ (E_on + E_off) × f_s = 200 µJ × 20,000 Hz = 4.00 W" },
+      { pin: "Total MOSFET Dissipation", function: "P_total = P_cond + P_sw = 2.00 W + 4.00 W = 6.00 W" },
+      { pin: "Junction Temperature (T_j)", function: "T_j = T_a + (P_total × R_θ) = 30°C + (6.0 W × 8.0 °C/W) = 78.00 °C" },
+      { pin: "Thermal Safety Margin", function: "Margin = T_j(max) - T_j = 150°C - 78°C = +72.00 °C (Safe Operating Region)" },
+      { pin: "MOSFET-Only Efficiency", function: "η = [P_out / (P_out + P_total)] × 100% = [100 / (100 + 6)] = 94.34%" },
+      { pin: "Pytest Automated Suite", function: "5/5 Passing Tests: Conduction, Switching, Total, Freq Doubling, ValueError" }
+    ],
+    tags: ["Power Electronics", "Semiconductor Devices", "MOSFET Thermal Modeling", "Python", "Streamlit", "Plotly", "Pytest", "Loss Analysis"],
+    image: "/projects/mosfet-thermal-analyzer.png",
+    imageBadge: "Live App Dashboard",
+    liveUrl: "https://mosfet-thermal-analyzer-wemtycydxwe9pbux8wk4xg.streamlit.app/",
+    liveLabel: "Live Streamlit Simulation App",
+    githubRepo: "https://github.com/varthanvgvishnu-cmyk/mosfet-thermal-analyzer",
+    truthLabel: "Mathematical simulation engine verified with automated pytest suite; models steady-state conduction & switching losses under ideal 1D thermal resistance assumptions without transient thermal impedance network."
+  },
   {
     id: "esp32-safe-locker",
     title: "ESP32-Based Smart Safe Locker with OLED Display & Timed Security Lockout",
@@ -199,9 +236,9 @@ export const projects = [
     ],
     tags: ["Computer Vision", "OpenCV", "Python", "Industrial Safety", "Edge Computing"],
     imagePlaceholder: "/projects/visionshield.jpg",
-    wiringDiagramPlaceholder: "/projects/visionshield-flowchart.png",
-    demoVideoPlaceholder: "https://www.youtube.com/watch?v=placeholder-visionshield",
-    githubRepo: "https://github.com/vishnuvarthan-vg/vision-shield-safety",
+    liveUrl: "https://visionshield-iota.vercel.app/",
+    liveLabel: "Live Vercel Deployment",
+    githubRepo: "https://github.com/varthanvgvishnu-cmyk/visionshield",
     truthLabel: "Clearly scoped as a software/vision safety prototype without false commercial certification claims."
   }
 ];

@@ -129,7 +129,7 @@ export default function Contact() {
               </div>
               <div className="text-left overflow-hidden">
                 <p className="text-xs font-semibold text-white group-hover:text-[#00ff88] transition-colors">LinkedIn</p>
-                <p className="text-[10px] text-slate-400 truncate">in/vishnuvarthan</p>
+                <p className="text-[10px] text-slate-400 truncate">in/vishnu-varthan-vg</p>
               </div>
             </a>
 

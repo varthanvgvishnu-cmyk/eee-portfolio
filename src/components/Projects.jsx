@@ -6,11 +6,13 @@ import ProjectModal from './ProjectModal';
 import { 
   CircuitBoard, 
   Cpu, 
+  ExternalLink,
   Zap 
 } from 'lucide-react';
 
 const CATEGORIES = [
   'All',
+  'Power Electronics & Simulation',
   'Embedded & IoT',
   'Robotics & Hardware',
   'Signal Processing & Control',
@@ -88,7 +90,7 @@ export default function Projects() {
                   <div className="absolute inset-0 bg-gradient-to-t from-[#040804] via-black/20 to-transparent" />
                   <div className="absolute bottom-2.5 left-3 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/75 backdrop-blur-md border border-[#00ff88]/30 text-[10px] font-mono text-[#00ff88] shadow-md">
                     <CircuitBoard className="w-3 h-3 text-[#00ff88]" />
-                    <span>Circuit Diagram</span>
+                    <span>{project.imageBadge || "Circuit Diagram"}</span>
                   </div>
                 </div>
               ) : null}
@@ -153,8 +155,20 @@ export default function Projects() {
                     className="flex-1 py-2 px-3 rounded-xl text-xs font-semibold bg-white/10 hover:bg-[#00ff88]/20 hover:text-[#00ff88] text-white border border-white/10 hover:border-[#00ff88]/30 transition-all flex items-center justify-center gap-1.5 active:scale-95"
                   >
                     <CircuitBoard className="w-3.5 h-3.5 text-[#00ff88]" />
-                    <span>Specs & Circuit</span>
+                    <span>{project.pinoutTitle ? "Specs & Math" : "Specs & Circuit"}</span>
                   </button>
+
+                  {project.liveUrl && (
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-2 rounded-xl bg-[#00ff88]/15 hover:bg-[#00ff88]/25 text-[#00ff88] border border-[#00ff88]/30 hover:border-[#00ff88]/50 transition-all flex items-center justify-center shadow-[0_0_10px_rgba(0,255,136,0.15)]"
+                      title={`Launch ${project.liveLabel || "Live Application"}`}
+                    >
+                      <ExternalLink className="w-4 h-4" />
+                    </a>
+                  )}
 
                   <a
                     href={project.githubRepo}
