@@ -158,7 +158,7 @@ export const projects = [
   },
   {
     id: "dc-motor-speed-control",
-    title: "Arduino DC Motor Speed Control",
+    title: "PID-Based DC Motor Speed Control",
     category: "Robotics & Hardware",
     statusBadge: "PWM Speed Control & Hall Tachometer (Verified)",
     statusType: "completed",
@@ -182,7 +182,7 @@ export const projects = [
       { pin: "5V & GND", function: "Logic Power Rail shared with Potentiometer & Hall Sensor" },
       { pin: "12V & Common GND", function: "High-Current External Motor Power Supply Rail" }
     ],
-    tags: ["Arduino", "PWM Regulation", "Motor Drivers", "L298N", "Hall Effect Sensor", "Power Electronics", "Hardware Interfacing"],
+    tags: ["Arduino", "PID Control", "PWM Regulation", "Motor Drivers", "L298N", "Hall Effect Sensor", "Power Electronics", "Hardware Interfacing"],
     image: "/projects/dc-motor-circuit.jpg",
     wiringDiagram: "/projects/dc-motor-circuit.jpg",
     demoVideoPlaceholder: "https://www.youtube.com/watch?v=placeholder-dc-motor",

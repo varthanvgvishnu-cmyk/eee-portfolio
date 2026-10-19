@@ -32,7 +32,7 @@ Built with **React**, **Vite**, **Tailwind CSS**, and **Motion for React** (`mot
 3. **Rigorous & Truthful Project Showcase**:
    - **ESP32-Based Smart Safe Locker with OLED & Timed Security Lockout**: Potentiometer digit selector, I2C SSD1306 OLED, dual LED indicators, buzzer alarm, and 30s lockout after 3 wrong attempts.
    - **Flame Rover**: Autonomous mobile fire detection with IR sensor array and L298N H-bridge driver.
-   - **Arduino DC Motor Speed Control**: Accurately labeled open-loop PWM duty cycle control, honestly disclosing planned optical RPM encoder and discrete PID loop for phase 2.
+   - **PID-Based DC Motor Speed Control**: Closed-loop motor speed regulation using Proportional-Integral-Derivative (PID) algorithm, Arduino Uno, L298N H-Bridge, and Hall effect sensor RPM pulse feedback.
    - **ML-Driven Adaptive Noise Cancellation**: Identifies completed LMS/NLMS numerical simulations vs proposed DSP microcontroller deployment.
    - **VisionShield**: Realistically scoped optical hazard boundary surveillance prototype.
    - **Smart Industrial Process Automation using State Feedback Control**: Academic review and MATLAB pole placement ($K$ gain matrix) simulation study.
