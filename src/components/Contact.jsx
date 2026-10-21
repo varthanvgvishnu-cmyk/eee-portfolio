@@ -117,12 +117,12 @@ export default function Contact() {
           </div>
 
           {/* Social Profiles Grid */}
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
             <a
               href={personalInfo.socials.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-4 rounded-2xl glass-card border border-[#00ff88]/20 hover:border-[#00ff88]/50 transition-all flex items-center gap-3 group"
+              className="p-3.5 sm:p-4 rounded-2xl glass-card border border-[#00ff88]/20 hover:border-[#00ff88]/50 transition-all flex items-center gap-3 group touch-manipulation"
             >
               <div className="w-9 h-9 rounded-xl bg-[#00ff88]/15 text-[#00ff88] flex items-center justify-center group-hover:scale-110 transition-transform shrink-0">
                 <LinkedinIcon className="w-5 h-5" />
@@ -137,7 +137,7 @@ export default function Contact() {
               href={personalInfo.socials.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-4 rounded-2xl glass-card border border-[#00ff88]/20 hover:border-[#00ff88]/50 transition-all flex items-center gap-3 group"
+              className="p-3.5 sm:p-4 rounded-2xl glass-card border border-[#00ff88]/20 hover:border-[#00ff88]/50 transition-all flex items-center gap-3 group touch-manipulation"
             >
               <div className="w-9 h-9 rounded-xl bg-white/10 text-[#00ff88] flex items-center justify-center group-hover:scale-110 transition-transform shrink-0">
                 <GithubIcon className="w-5 h-5" />

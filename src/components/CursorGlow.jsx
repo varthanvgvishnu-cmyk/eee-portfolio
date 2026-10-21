@@ -116,7 +116,7 @@ export default function CursorGlow() {
   }, []);
 
   return (
-    <div className="pointer-events-none fixed inset-0 z-50 overflow-hidden select-none">
+    <div className="hidden lg:block pointer-events-none fixed inset-0 z-50 overflow-hidden select-none">
       {/* Layer 1: Gentle Ambient White Glow (Atmospheric Halo) */}
       <div
         ref={ambientGlowRef}

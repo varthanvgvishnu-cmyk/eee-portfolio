@@ -44,7 +44,7 @@ export default function ProjectModal({ project, onClose }) {
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 md:p-6 overflow-y-auto">
         {/* Backdrop Glass Overlay */}
         <motion.div
           initial={{ opacity: 0 }}
@@ -60,16 +60,16 @@ export default function ProjectModal({ project, onClose }) {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
           transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          className="relative w-full max-w-4xl max-h-[90vh] flex flex-col rounded-3xl glass-nav border border-[#00ff88]/30 shadow-[0_0_50px_rgba(0,255,136,0.18)] overflow-hidden z-10 text-left my-auto bg-[#040804]"
+          className="relative w-full max-w-4xl max-h-[92vh] sm:max-h-[90vh] flex flex-col rounded-2xl sm:rounded-3xl glass-nav border border-[#00ff88]/30 shadow-[0_0_50px_rgba(0,255,136,0.18)] overflow-hidden z-10 text-left my-auto bg-[#040804]"
         >
           {/* Header Bar */}
-          <div className="p-5 sm:p-6 border-b border-[#00ff88]/15 flex items-start justify-between gap-4 bg-gradient-to-r from-[#00ff88]/[0.05] to-transparent">
+          <div className="p-4 sm:p-6 border-b border-[#00ff88]/15 flex items-start justify-between gap-3 sm:gap-4 bg-gradient-to-r from-[#00ff88]/[0.05] to-transparent">
             <div>
-              <div className="flex flex-wrap items-center gap-2 mb-2">
-                <span className="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-medium bg-[#00ff88]/15 text-[#00ff88] border border-[#00ff88]/30 shadow-[0_0_8px_rgba(0,255,136,0.2)]">
+              <div className="flex flex-wrap items-center gap-2 mb-1.5 sm:mb-2">
+                <span className="px-2.5 py-0.5 rounded-full text-[10px] sm:text-[11px] font-mono font-medium bg-[#00ff88]/15 text-[#00ff88] border border-[#00ff88]/30 shadow-[0_0_8px_rgba(0,255,136,0.2)]">
                   {project.category}
                 </span>
-                <span className={`px-2.5 py-0.5 rounded-full text-[11px] font-mono font-medium border ${
+                <span className={`px-2.5 py-0.5 rounded-full text-[10px] sm:text-[11px] font-mono font-medium border ${
                   project.statusType === 'completed'
                     ? 'bg-[#00ff88]/20 text-[#00ff88] border-[#00ff88]/40'
                     : project.statusType === 'in-progress'
@@ -79,14 +79,14 @@ export default function ProjectModal({ project, onClose }) {
                   {project.statusBadge}
                 </span>
               </div>
-              <h3 className="text-xl sm:text-2xl font-bold text-white leading-snug">
+              <h3 className="text-lg sm:text-2xl font-bold text-white leading-snug">
                 {project.title}
               </h3>
             </div>
 
             <button
               onClick={onClose}
-              className="p-2 rounded-full bg-white/5 hover:bg-[#00ff88]/20 text-slate-400 hover:text-[#00ff88] transition-colors"
+              className="p-1.5 sm:p-2 rounded-full bg-white/5 hover:bg-[#00ff88]/20 text-slate-400 hover:text-[#00ff88] transition-colors shrink-0"
               aria-label="Close modal"
             >
               <X className="w-5 h-5" />
@@ -94,7 +94,7 @@ export default function ProjectModal({ project, onClose }) {
           </div>
 
           {/* Navigation Tabs */}
-          <div className="flex border-b border-[#00ff88]/15 px-5 sm:px-6 gap-2 sm:gap-4 overflow-x-auto text-xs font-medium">
+          <div className="flex border-b border-[#00ff88]/15 px-3 sm:px-6 gap-2 sm:gap-4 overflow-x-auto no-scrollbar text-xs font-medium">
             <button
               onClick={() => setActiveTab('overview')}
               className={`py-3 px-2 border-b-2 transition-colors whitespace-nowrap flex items-center gap-1.5 ${
@@ -487,21 +487,21 @@ export default function ProjectModal({ project, onClose }) {
           </div>
 
           {/* Modal Footer Bar */}
-          <div className="p-4 sm:p-5 border-t border-[#00ff88]/15 bg-[#020502] flex flex-wrap items-center justify-between gap-3">
-            <span className="text-xs text-emerald-400/70 font-mono">
+          <div className="p-3 sm:p-5 border-t border-[#00ff88]/15 bg-[#020502] flex flex-col sm:flex-row items-center justify-between gap-3">
+            <span className="text-[11px] sm:text-xs text-emerald-400/70 font-mono text-center sm:text-left">
               CIT // EEE • Vishnu Varthan VG
             </span>
 
-            <div className="flex items-center gap-2.5">
+            <div className="flex flex-wrap items-center justify-center gap-2 w-full sm:w-auto">
               {project.liveUrl && (
                 <a
                   href={project.liveUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-4 py-2 rounded-full text-xs font-bold bg-[#00ff88] text-black hover:bg-[#4ade80] transition-all shadow-[0_0_15px_rgba(0,255,136,0.35)] flex items-center gap-1.5 active:scale-95"
+                  className="flex-1 sm:flex-initial px-3.5 py-2 rounded-full text-xs font-bold bg-[#00ff88] text-black hover:bg-[#4ade80] transition-all shadow-[0_0_15px_rgba(0,255,136,0.35)] flex items-center justify-center gap-1.5 active:scale-95 touch-manipulation"
                 >
                   <Globe className="w-3.5 h-3.5" />
-                  <span>{project.liveLabel || "Launch Live App"}</span>
+                  <span className="truncate">{project.liveLabel || "Launch Live App"}</span>
                   <ExternalLink className="w-3 h-3 text-black" />
                 </a>
               )}
@@ -510,16 +510,16 @@ export default function ProjectModal({ project, onClose }) {
                 href={project.githubRepo}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-4 py-2 rounded-full text-xs font-semibold bg-white/10 hover:bg-[#00ff88]/20 hover:text-[#00ff88] text-white border border-white/15 hover:border-[#00ff88]/30 transition-all flex items-center gap-2"
+                className="flex-1 sm:flex-initial px-3.5 py-2 rounded-full text-xs font-semibold bg-white/10 hover:bg-[#00ff88]/20 hover:text-[#00ff88] text-white border border-white/15 hover:border-[#00ff88]/30 transition-all flex items-center justify-center gap-2 touch-manipulation"
               >
                 <GithubIcon className="w-4 h-4" />
-                <span>GitHub Repository</span>
+                <span>GitHub</span>
                 <ExternalLink className="w-3 h-3 text-slate-400" />
               </a>
 
               <button
                 onClick={onClose}
-                className="px-4 py-2 rounded-full text-xs font-semibold bg-white/10 hover:bg-white/20 text-white transition-colors border border-white/10"
+                className="w-full sm:w-auto px-4 py-2 rounded-full text-xs font-semibold bg-white/10 hover:bg-white/20 text-white transition-colors border border-white/10 touch-manipulation"
               >
                 Close View
               </button>
