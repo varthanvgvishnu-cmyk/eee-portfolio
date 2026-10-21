@@ -28,7 +28,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative z-20 border-t border-[#00ff88]/15 bg-[#020402] pt-16 pb-24 lg:pb-12 px-4 sm:px-6 md:px-12 text-slate-400 text-xs">
+    <footer className="relative z-20 border-t border-[#00ff88]/15 bg-[#020402] pt-16 pb-12 px-4 sm:px-6 md:px-12 text-slate-400 text-xs">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8 mb-12">
         {/* Branding & Department info */}
         <div className="flex flex-col items-center md:items-start text-center md:text-left space-y-2">

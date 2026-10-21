@@ -90,13 +90,13 @@ export default function About() {
           </div>
 
           {/* Quick Metrics Strip */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {personalInfo.stats.map((stat) => (
-              <div key={stat.label} className="p-3 sm:p-4 rounded-2xl glass-card border border-[#00ff88]/15 hover:border-[#00ff88]/35 text-center">
-                <div className="text-xl sm:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#00ff88] to-[#4ade80] font-mono mb-0.5">
+              <div key={stat.label} className="p-4 rounded-2xl glass-card border border-[#00ff88]/15 hover:border-[#00ff88]/35 text-center">
+                <div className="text-2xl sm:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#00ff88] to-[#4ade80] font-mono mb-0.5">
                   {stat.value}
                 </div>
-                <div className="text-[11px] sm:text-xs font-medium text-white mb-0.5">{stat.label}</div>
+                <div className="text-xs font-medium text-white mb-0.5">{stat.label}</div>
                 <div className="text-[10px] text-emerald-400/80">{stat.sub}</div>
               </div>
             ))}

@@ -31,22 +31,12 @@
     overflow-x: hidden;
     margin: 0;
     padding: 0;
-    -webkit-tap-highlight-color: transparent;
   }
 
   ::selection {
     background-color: rgba(0, 255, 136, 0.25);
     color: #00ff88;
   }
-}
-
-/* Hide scrollbar utility for touch & mobile carousels */
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
 }
 
 /* Custom Liquid UI Glassmorphism & Neon Glow Styles */

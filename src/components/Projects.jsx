@@ -42,15 +42,15 @@ export default function Projects() {
           <div className="w-20 h-1 bg-gradient-to-r from-[#00ff88] to-[#10b981] rounded-full mt-4 shadow-[0_0_10px_#00ff88]" />
         </div>
 
-        {/* Category Filter Pills (Swipable on Phone, Clean Wrap on Desktop) */}
-        <div className="w-full md:w-auto flex items-center gap-1.5 bg-white/[0.02] p-1.5 rounded-2xl border border-[#00ff88]/15 backdrop-blur-md overflow-x-auto no-scrollbar pb-1.5 sm:pb-1.5">
+        {/* Category Filter Pills */}
+        <div className="flex flex-wrap items-center gap-1.5 bg-white/[0.02] p-1.5 rounded-2xl border border-[#00ff88]/15 backdrop-blur-md">
           {CATEGORIES.map(category => (
             <button
               key={category}
               onClick={() => setSelectedCategory(category)}
-              className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-all duration-200 whitespace-nowrap shrink-0 touch-manipulation ${
+              className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-all duration-200 ${
                 selectedCategory === category
-                  ? 'bg-[#00ff88]/20 text-[#00ff88] border border-[#00ff88]/40 shadow-[0_0_12px_rgba(0,255,136,0.2)] font-semibold'
+                  ? 'bg-[#00ff88]/20 text-[#00ff88] border border-[#00ff88]/40 shadow-[0_0_12px_rgba(0,255,136,0.2)]'
                   : 'text-slate-400 hover:text-white hover:bg-white/5 border border-transparent'
               }`}
             >

@@ -1,17 +1,6 @@
 import { AnimatePresence, motion } from 'motion/react';
 import React, { useEffect, useState } from 'react';
-import { 
-  CircuitBoard, 
-  Cpu, 
-  Factory, 
-  FileText, 
-  Home, 
-  Mail, 
-  Menu, 
-  Sparkles, 
-  User, 
-  X 
-} from 'lucide-react';
+import { Cpu, FileText, Menu, Sparkles, X } from 'lucide-react';
 
 const NAV_ITEMS = [
   { label: 'Home', href: '#home' },
@@ -156,111 +145,59 @@ export default function Navbar() {
         </div>
       </motion.nav>
 
-      {/* Mobile Drawer Menu & Backdrop Overlay */}
+      {/* Mobile Drawer Menu */}
       <AnimatePresence>
         {mobileMenuOpen && (
-          <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setMobileMenuOpen(false)}
-              className="fixed inset-0 z-40 bg-black/80 backdrop-blur-md lg:hidden"
-            />
-            <motion.div
-              initial={{ opacity: 0, y: -20, scale: 0.98 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -20, scale: 0.98 }}
-              transition={{ duration: 0.25 }}
-              className="fixed top-20 inset-x-3 sm:inset-x-6 z-50 lg:hidden p-4 sm:p-5 rounded-3xl glass-panel border border-[#00ff88]/30 shadow-2xl space-y-2 backdrop-blur-2xl bg-[#040905]/95 max-h-[calc(100vh-6rem)] overflow-y-auto"
-            >
-              <div className="flex flex-col space-y-1">
-                {NAV_ITEMS.map((item) => {
-                  const sectionId = item.href.substring(1);
-                  const isActive = activeSection === sectionId;
-                  return (
-                    <button
-                      key={item.label}
-                      onClick={() => scrollTo(sectionId)}
-                      className={`flex items-center justify-between px-4 py-2.5 rounded-xl text-sm font-medium transition-colors text-left ${
-                        isActive
-                          ? 'bg-gradient-to-r from-[#00ff88]/20 to-[#10b981]/20 text-white font-semibold border border-[#00ff88]/40'
-                          : 'text-slate-300 hover:bg-white/5 hover:text-[#00ff88]'
-                      }`}
-                    >
-                      <span>{item.label}</span>
-                      {isActive && <span className="w-1.5 h-1.5 rounded-full bg-[#00ff88] shadow-[0_0_6px_#00ff88]" />}
-                    </button>
-                  );
-                })}
-              </div>
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.25 }}
+            className="fixed top-20 inset-x-4 z-40 lg:hidden p-5 rounded-2xl glass-panel border border-[#00ff88]/25 shadow-2xl space-y-2 backdrop-blur-2xl bg-[#040905]/95"
+          >
+            <div className="flex flex-col space-y-1">
+              {NAV_ITEMS.map((item) => {
+                const sectionId = item.href.substring(1);
+                const isActive = activeSection === sectionId;
+                return (
+                  <button
+                    key={item.label}
+                    onClick={() => scrollTo(sectionId)}
+                    className={`flex items-center justify-between px-4 py-2.5 rounded-xl text-sm font-medium transition-colors text-left ${
+                      isActive
+                        ? 'bg-gradient-to-r from-[#00ff88]/20 to-[#10b981]/20 text-white font-semibold border border-[#00ff88]/40'
+                        : 'text-slate-300 hover:bg-white/5 hover:text-[#00ff88]'
+                    }`}
+                  >
+                    <span>{item.label}</span>
+                    {isActive && <span className="w-1.5 h-1.5 rounded-full bg-[#00ff88] shadow-[0_0_6px_#00ff88]" />}
+                  </button>
+                );
+              })}
+            </div>
 
-              <div className="pt-3 mt-2 border-t border-white/10 flex items-center justify-between gap-3">
-                <a
-                  href="/resume.pdf"
-                  download="Vishnu_Varthan_VG_Resume.pdf"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex-1 flex items-center justify-center gap-2 py-2 rounded-xl text-xs font-medium bg-white/10 text-white border border-white/10 hover:border-[#00ff88]/40"
-                >
-                  <FileText className="w-3.5 h-3.5 text-[#00ff88]" />
-                  Resume / CV
-                </a>
-                <button
-                  onClick={() => scrollTo('contact')}
-                  className="flex-1 flex items-center justify-center gap-2 py-2 rounded-xl text-xs font-semibold bg-gradient-to-r from-[#00ff88] to-[#10b981] text-black shadow-lg shadow-[#00ff88]/25"
-                >
-                  <Sparkles className="w-3.5 h-3.5" />
-                  Get in Touch
-                </button>
-              </div>
-            </motion.div>
-          </>
+            <div className="pt-3 mt-2 border-t border-white/10 flex items-center justify-between gap-3">
+              <a
+                href="/resume.pdf"
+                download="Vishnu_Varthan_VG_Resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 flex items-center justify-center gap-2 py-2 rounded-xl text-xs font-medium bg-white/10 text-white border border-white/10 hover:border-[#00ff88]/40"
+              >
+                <FileText className="w-3.5 h-3.5 text-[#00ff88]" />
+                Resume / CV
+              </a>
+              <button
+                onClick={() => scrollTo('contact')}
+                className="flex-1 flex items-center justify-center gap-2 py-2 rounded-xl text-xs font-semibold bg-gradient-to-r from-[#00ff88] to-[#10b981] text-black shadow-lg shadow-[#00ff88]/25"
+              >
+                <Sparkles className="w-3.5 h-3.5" />
+                Get in Touch
+              </button>
+            </div>
+          </motion.div>
         )}
       </AnimatePresence>
-
-      {/* Mobile Floating Bottom Quick-Nav Bar (Phone View) */}
-      <motion.nav
-        initial={{ y: 50, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.3, duration: 0.4 }}
-        className="fixed bottom-3 inset-x-3 z-40 lg:hidden pointer-events-none"
-        aria-label="Mobile quick navigation"
-      >
-        <div className="max-w-md mx-auto rounded-full glass-nav border border-[#00ff88]/35 shadow-[0_10px_35px_rgba(0,0,0,0.95),0_0_20px_rgba(0,255,136,0.2)] p-1 pointer-events-auto flex items-center justify-between bg-[#030804]/90 backdrop-blur-2xl px-2">
-          {[
-            { id: 'home', label: 'Home', icon: Home },
-            { id: 'about', label: 'About', icon: User },
-            { id: 'projects', label: 'Projects', icon: CircuitBoard },
-            { id: 'skills', label: 'Skills', icon: Cpu },
-            { id: 'internship', label: 'Field', icon: Factory },
-            { id: 'contact', label: 'Contact', icon: Mail }
-          ].map(({ id, label, icon: Icon }) => {
-            const isActive = activeSection === id;
-            return (
-              <button
-                key={id}
-                onClick={() => scrollTo(id)}
-                className={`relative flex flex-col items-center justify-center py-1.5 px-2.5 rounded-full transition-all text-[10px] font-medium touch-manipulation ${
-                  isActive
-                    ? 'text-[#00ff88] font-bold'
-                    : 'text-slate-400 hover:text-white'
-                }`}
-              >
-                {isActive && (
-                  <motion.div
-                    layoutId="mobileActiveTab"
-                    className="absolute inset-0 rounded-full bg-[#00ff88]/20 border border-[#00ff88]/40 shadow-[0_0_12px_rgba(0,255,136,0.35)]"
-                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                  />
-                )}
-                <Icon className={`w-4 h-4 relative z-10 transition-transform ${isActive ? 'text-[#00ff88] scale-110' : 'text-slate-400'}`} />
-                <span className="relative z-10 tracking-tight mt-0.5">{label}</span>
-              </button>
-            );
-          })}
-        </div>
-      </motion.nav>
     </>
   );
 }

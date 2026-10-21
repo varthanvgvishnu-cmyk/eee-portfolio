@@ -104,14 +104,14 @@ export default function Internship() {
             {/* Metallic DIN Rail line */}
             <div className="absolute top-1/2 inset-x-4 h-4 bg-gradient-to-r from-emerald-900/60 via-slate-600 to-emerald-900/60 rounded-sm -translate-y-1/2 border-y border-emerald-500/30 opacity-70 z-0" />
 
-            <div className="relative z-10 grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3">
+            <div className="relative z-10 grid grid-cols-2 sm:grid-cols-3 gap-3">
               {internship.panelComponents.map((comp, idx) => {
                 const isSelected = selectedComponentIndex === idx;
                 return (
                   <button
                     key={comp.name}
                     onClick={() => setSelectedComponentIndex(idx)}
-                    className={`p-3 sm:p-4 rounded-xl text-left transition-all relative flex flex-col justify-between min-h-[105px] sm:min-h-[120px] touch-manipulation ${
+                    className={`p-4 rounded-xl text-left transition-all relative flex flex-col justify-between min-h-[120px] ${
                       isSelected
                         ? 'bg-[#00ff88]/20 border-2 border-[#00ff88] shadow-[0_0_20px_rgba(0,255,136,0.3)]'
                         : 'bg-[#040804]/90 hover:bg-[#070e07] border border-[#00ff88]/15'
