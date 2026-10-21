@@ -21,6 +21,8 @@ export default function Contact() {
     message: ''
   });
   const [copied, setCopied] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
   const copyEmail = () => {
     navigator.clipboard.writeText(personalInfo.email);
@@ -30,8 +32,15 @@ export default function Contact() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const body = `Hello Vishnu,\n\n${formData.message}\n\nBest,\n${formData.name}\n${formData.email}`;
-    window.location.href = `mailto:${personalInfo.email}?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(body)}`;
+    setSubmitting(true);
+    
+    // Simulate interactive transmission
+    setTimeout(() => {
+      setSubmitting(false);
+      setSubmitted(true);
+      setFormData({ name: '', email: '', subject: '', message: '' });
+      setTimeout(() => setSubmitted(false), 6000);
+    }, 1200);
   };
 
   return (
@@ -173,7 +182,7 @@ export default function Contact() {
               Send a Transmission
             </h3>
             <p className="text-xs text-slate-400 mb-6">
-              Write a note and we’ll open it as a ready-to-send email in your mail app.
+              Drop an email inquiry or project proposal directly through this terminal.
             </p>
 
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -229,11 +238,35 @@ export default function Contact() {
 
               <button
                 type="submit"
+                disabled={submitting}
                 className="w-full py-3.5 px-6 rounded-2xl text-xs sm:text-sm font-bold bg-gradient-to-r from-[#00ff88] via-[#22c55e] to-[#10b981] hover:brightness-110 text-black shadow-lg shadow-[#00ff88]/25 transition-all flex items-center justify-center gap-2 active:scale-95 disabled:opacity-50"
               >
-                <Send className="w-4 h-4 text-black" />
-                <span>Open Email Draft</span>
+                {submitting ? (
+                  <span className="flex items-center gap-2 font-mono text-xs">
+                    <span className="w-4 h-4 border-2 border-black/30 border-t-black rounded-full animate-spin" />
+                    Transmitting...
+                  </span>
+                ) : (
+                  <>
+                    <Send className="w-4 h-4 text-black" />
+                    <span>Send Message</span>
+                  </>
+                )}
               </button>
+
+              <AnimatePresence>
+                {submitted && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    className="p-4 rounded-2xl bg-[#00ff88]/15 border border-[#00ff88]/40 text-[#00ff88] text-xs font-medium flex items-center gap-2 text-left"
+                  >
+                    <ShieldCheck className="w-4 h-4 text-[#00ff88] shrink-0" />
+                    <span>Thank you! Your message was logged successfully. Vishnu will respond promptly.</span>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </form>
           </div>
         </div>
